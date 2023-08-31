@@ -1,13 +1,26 @@
 "use client";
 import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const handleSubmit = (e: any) => {
+  const [name, setName] = useState("kashif");
+  const [email, setEmail] = useState("k@gmail.com");
+  const [password, setPassword] = useState("123456789");
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.table({ name, email, pass });
+    try {
+      const data = {
+        name,
+        email,
+        password,
+      };
+      await axios.post("http://localhost:8000/api/register", data);
+      // console.table({ name, email, password });
+      toast.success("Registeration Successfull. Pleas Login");
+    } catch (err) {
+      toast.error(err.response.data);
+    }
   };
 
   const handleNameChange = (e: any) => {
@@ -17,7 +30,7 @@ const Register = () => {
     setEmail(e.target.value);
   };
   const handlePassChange = (e: any) => {
-    setPass(e.target.value);
+    setPassword(e.target.value);
   };
   return (
     <>
@@ -43,7 +56,7 @@ const Register = () => {
           <input
             className="w-full p-4 border rounded border-gray-400"
             type="password"
-            value={pass}
+            value={password}
             onChange={handlePassChange}
             placeholder="Enter Password"
             required
