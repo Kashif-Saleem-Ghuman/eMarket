@@ -5,9 +5,9 @@ import theme from "../theme/themeConfig";
 export default function Page() {
   return (
     <ConfigProvider>
-      <div className="flex p-5 flex-col">
+      <div className="flex flex-col w-1/3 p-5 gap-5 m-auto">
+        <h1 className="text-5xl text-center mt-5 ">Online Market Place</h1>
         <Button type="primary">Button</Button>
-        <h1 className="text-2xl  ">Online Market Place</h1>
       </div>
     </ConfigProvider>
   );
