@@ -39,7 +39,6 @@ const NavBar: React.FC = () => {
   };
 
   React.useEffect(() => {
-    console.log("Path name: ", pathName);
     setCurrent(pathName);
   }, [pathName]);
 
