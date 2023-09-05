@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { Menu } from "antd";
 import Link from "next/link";
 import {
   HomeOutlined,
@@ -9,33 +8,49 @@ import {
   UserAddOutlined,
 } from "@ant-design/icons";
 
-const { Item } = Menu;
+import type { MenuProps } from "antd";
+import { Menu } from "antd";
+import { usePathname } from "next/navigation";
+
+const items: MenuProps["items"] = [
+  {
+    label: <Link href="/">Home</Link>,
+    key: "/",
+    icon: <HomeOutlined />,
+  },
+  {
+    label: <Link href="/login">Login</Link>,
+    key: "/login",
+    icon: <LoginOutlined />,
+  },
+  {
+    label: <Link href="/register">Register</Link>,
+    key: "/register",
+    icon: <UserAddOutlined />,
+  },
+];
 
 const NavBar: React.FC = () => {
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState("");
+  const pathName = usePathname();
 
-  const handleClick = (e: any) => {
+  const onClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
   };
 
+  React.useEffect(() => {
+    console.log("Path name: ", pathName);
+    setCurrent(pathName);
+  }, [pathName]);
+
   return (
     <Menu
-      onClick={handleClick}
+      onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"
-      style={{ display: "flex", justifyContent: "center"}}
-    
-    >
-      <Item icon={<HomeOutlined />} key="home">
-        <Link href="/">Home</Link>
-      </Item>
-      <Item icon={<LoginOutlined />} key="login">
-        <Link href="/login">Login</Link>
-      </Item>
-      <Item icon={<UserAddOutlined />} key="register">
-        <Link href="/register">Register</Link>
-      </Item>
-    </Menu>
+      items={items}
+      style={{ display: "flex", justifyContent: "center" }}
+    />
   );
 };
 
